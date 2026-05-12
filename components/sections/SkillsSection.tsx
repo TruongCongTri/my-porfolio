@@ -37,7 +37,7 @@ export const SkillsSection = () => {
             isActive ? "text-cyan-400" : "text-zinc-600"
           }`}
         >
-          [ 01 // About & Contact ]
+          [ 02 // Skills ]
         </span>
       </div>
 
