@@ -1,79 +1,64 @@
-// components/layout/Header.tsx
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-// import dynamic from "next/dynamic";
-import { cn } from "@/lib/utils";
-// import { ShoppingCart } from "lucide-react";
+import { navLinks } from '@/data/nav-links';
+import { useState, useEffect } from 'react';
 
-// Kỹ thuật Import Động (Dynamic Import) tắt SSR
-// Tránh hoàn toàn lỗi Hydration và lỗi Cascading Renders của React
-// const CartButtonDynamic = dynamic(() => import("../buttons/CartButton"), {
-//   ssr: false,
-//   // Hiển thị một icon giỏ hàng trống trong lúc chờ load dữ liệu từ localStorage
-//   loading: () => (
-//     <div className="relative p-2 text-muted-foreground">
-//       <ShoppingCart className="w-5 h-5 opacity-50" />
-//     </div>
-//   ),
-// });
+export const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
 
-export function Header() {
-  const pathname = usePathname();
-
-  const navLinks = [
-    { name: "Trang chủ", href: "/" },
-    { name: "Khóa học", href: "/courses" },
-    { name: "Giới thiệu", href: "/about" },
-  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="text-tech-subheader font-bold text-primary">
-          BoilerPlate
-        </Link>
-
-        {/* Dynamic Navigation Tabs */}
-        <nav className="flex gap-6">
-          {navLinks.map((link) => {
-            // Kiểm tra xem URL hiện tại có khớp với Link không
-            const isActive =
-              pathname === link.href || pathname.startsWith(`${link.href}/`);
-
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-body-inter font-medium transition-colors hover:text-primary",
-                  isActive
-                    ? "text-primary border-b-2 border-primary"
-                    : "text-muted-foreground",
-                )}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
+    <header className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4 w-full pointer-events-none">
+      <div 
+        className={`pointer-events-auto flex items-center justify-between w-full max-w-4xl px-6 py-3 rounded-full transition-all duration-500 border ${
+          isScrolled 
+            ? 'bg-zinc-950/80 backdrop-blur-xl border-zinc-800 shadow-2xl shadow-black/50' 
+            : 'bg-zinc-900/40 backdrop-blur-md border-zinc-800/50'
+        }`}
+      >
+        {/* Left: Logo (Changed to standard <a> tag) */}
+        <a href="#home" className="flex items-center gap-2 group">
+          <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center group-hover:bg-cyan-500/30 transition-colors border border-cyan-500/30">
+            <span className="text-cyan-400 font-mono text-xs font-bold">TCT</span>
+          </div>
+        </a>
+        
+        {/* Center: Navigation (Changed to standard <a> tags) */}
+        <nav className="hidden md:flex items-center space-x-1 bg-zinc-950/50 px-2 py-1 rounded-full border border-zinc-800">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="text-xs font-medium text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 px-4 py-2 rounded-full transition-all duration-300"
+            >
+              {link.name}
+            </a>
+          ))}
         </nav>
-
-        {/* Giỏ hàng (Dynamic Sync qua Zustand) */}
+        
+        {/* Right: CTA Button (Standard <a> tag for mailto) */}
         <div className="flex items-center gap-4">
-          {/* Nút Giỏ hàng đã được xử lý chống lỗi */}
-          {/* <CartButtonDynamic /> */}
-
-          {/* Nút Đăng nhập */}
-          <Link
-            href="/login"
-            className="bg-foreground text-background px-4 py-2 rounded-md text-normal font-semibold hover:bg-muted-foreground transition-colors"
+          <a 
+            href="mailto:tri.tcong@gmail.com"
+            className="hidden sm:block text-xs font-medium text-zinc-400 hover:text-cyan-400 transition-colors"
           >
-            Login
-          </Link>
+            tri.tcong@gmail.com
+          </a>
+          <a
+            href="mailto:tri.tcong@gmail.com"
+            className="text-xs font-bold text-zinc-950 bg-zinc-100 hover:bg-white px-5 py-2.5 rounded-full transition-transform hover:scale-105 shadow-sm"
+          >
+            Let&apos;s Talk
+          </a>
         </div>
       </div>
     </header>
   );
-}
+};
