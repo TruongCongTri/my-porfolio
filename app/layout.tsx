@@ -5,14 +5,12 @@ import "./globals.css";
 import { Header } from "@/components/layouts/Header";
 import {Footer} from "@/components/layouts/Footer";
 import NextTopLoader from "nextjs-toploader";
-import { env } from "@/lib/env";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const firaCode = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" });
 
 // config-6 -  Base Metadata & OpenGraph
 export const metadata: Metadata = {
-  metadataBase: new URL(env.NEXT_PUBLIC_URL),
   title: {
     default: "Truong Cong Tri | Full-Stack Developer", // Trang chủ sẽ có title này
     template: "%s | Full-Stack Developer", // Khi trang con cài title "Khóa React", nó sẽ ra "Khóa React | Boilerplate Next.js 13"
@@ -22,7 +20,6 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "vi_VN",
-    url: env.NEXT_PUBLIC_URL,
     siteName: "Truong Cong Tri | Full-Stack Developer",
     images: [{ url: "/images/default-og-cover.jpg", width: 1200, height: 630 }],
   },
