@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from "react";
 import {
   personalInfo,
 } from "@/data/index";
+import Link from "next/link";
 
 export const ContactSection = () => {
   const marqueeRef = useRef<HTMLDivElement>(null);
@@ -93,22 +94,22 @@ export const ContactSection = () => {
           {personalInfo.email}
         </a>
         <div className="w-full max-w-2xl flex flex-wrap justify-center gap-4">
-          <a
+          <Link
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link px-6 py-3 border-1.5 border-[#4A4135] rounded-full hover:bg-[#4A4135] transition-colors text-sm font-medium"
           >
             GitHub
-          </a>
-          <a
+          </Link>
+          <Link
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link px-6 py-3 border-1.5 border-[#4A4135] rounded-full hover:bg-[#4A4135] transition-colors text-sm font-medium"
           >
             LinkedIn
-          </a>
+          </Link>
           <a
             href="/"
             target="_blank"
