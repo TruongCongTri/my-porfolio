@@ -19,3 +19,13 @@ export const rowTwoSkills = [
   "REST APIs",
   "Claude",
 ];
+
+export const dbSkills = [
+  "PostgreSQL",
+  "MySQL",
+  "Redis",
+  "MongoDB",
+  "Prisma ORM",
+  "Drizzle ORM",
+  "SQL Optimization",
+];

@@ -1,13 +1,25 @@
 // Root Layout: Header, Footer, Font, Providers
 import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
+import { Space_Grotesk, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layouts/Header";
-import {Footer} from "@/components/layouts/Footer";
-import NextTopLoader from "nextjs-toploader";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const firaCode = Fira_Code({ subsets: ["latin"], variable: "--font-fira-code" });
+const spaceGrotesk = Space_Grotesk({ 
+  subsets: ["latin"],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-space'
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  style: ['italic'],
+  weight: ['500', '600'],
+  variable: '--font-playfair',
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: '--font-inter',
+});
 
 // config-6 -  Base Metadata & OpenGraph
 export const metadata: Metadata = {
@@ -31,22 +43,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${firaCode.variable} font-sans bg-zinc-950 text-zinc-100 antialiased selection:bg-cyan-500/30 selection:text-cyan-200`}>
-        <NextTopLoader
-          color="#00d3f2"
-          initialPosition={0.08}
-          crawlSpeed={200}
-          height={3}
-          crawl={true}
-          showSpinner={false}
-          easing="ease"
-          speed={200}
-        /> 
-        {/* Sẽ bọc ReactQueryProvider ở đây trong thực tế */}
-        <Header />
-        <main className="flex min-h-screen flex-col items-center w-full">{children}</main>
-        <Footer />
+    <html lang="en" className={`${spaceGrotesk.variable} ${inter.variable} ${playfair.variable}`}>
+      <body className={`antialiased`}>
+        <div className="noise"></div>
+        {children}
       </body>
     </html>
   );

@@ -1,58 +1,176 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+}
+body {
+  font-family: var(--font-space-grotesk), sans-serif;
+  background-color: #FAF8F5;
+  color: #1C1B1A;
+  cursor: none;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.font-mono {
+  font-family: "Inter", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Cinematic Custom Cursor */
+.cursor-dot {
+      position: fixed; top: 0; left: 0; width: 12px; height: 12px;
+      background-color: #A38A5A; border-radius: 50%; pointer-events: none;
+      z-index: 9999; transform: translate3d(-50%, -50%, 0);
+      transition: width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.3s ease, border 0.3s ease;
+  }
+.cursor-dot.active {
+  width: 80px;
+  height: 80px;
+  background-color: rgba(250, 248, 245, 0.85);
+  backdrop-filter: blur(4px);
+  border: 1.5px solid #1c1b1a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cursor-dot.active::after {
+  content: attr(data-text);
+  font-size: 10px;
+  font-weight: 700;
+  color: #1c1b1a;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: 0.05em;
+  text-align: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #faf8f5;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4c6b0;
+  border-radius: 4px;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #a38a5a;
+  border-radius: 10px;
+}
+
+/* Premium Noise Overlay */
+.noise {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Intersection Observer Reveal Utilities */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition:
+    opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Text Splitting Utilities */
+.char-wrapper {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.char {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.active .char {
+  transform: translateY(0);
+}
+
+.line-wrapper {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 2px;
+}
+.line {
+  display: block;
+  transform: translateY(100%);
+  opacity: 0;
+  transition:
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.8s ease;
+}
+.active .line {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Infinite Marquee */
+.marquee-content {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Creative 3D Spatial Spin */
+@keyframes spatialTumble {
+  0% { transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1); }
+  25% { transform: perspective(1000px) rotateX(15deg) rotateY(-30deg) scale(1.05); }
+  50% { transform: perspective(1000px) rotateX(-10deg) rotateY(180deg) scale(1.1); }
+  75% { transform: perspective(1000px) rotateX(10deg) rotateY(340deg) scale(1.05); }
+  100% { transform: perspective(1000px) rotateX(0deg) rotateY(360deg) scale(1); }
+}
+
+.group:hover .animate-creative-spin {
+  /* Using a custom cubic-bezier for a "bouncy/snappy" finish */
+  animation: spatialTumble 1.2s cubic-bezier(0.68, -0.55, 0.26, 1.55) forwards;
 }
 
 @layer utilities {
-  .perspective-1000 {
-    perspective: 1000px;
-  }
-
-  .rotate-y-tilt-left {
-    transform: rotateY(-5deg);
-  }
-
-  .rotate-x-tilt-up {
-    transform: rotateX(2deg);
+  .animate-shutter-open {
+    animation: shutterOpen 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 }
 
-  .animate-marquee {
-    animation: marquee 40s linear infinite;
+@keyframes shutterOpen {
+  0% {
+    clip-path: inset(100% 0 0 0); /* Closed, image completely hidden from bottom */
+    transform: scale(1.1); /* Slightly zoomed in */
   }
-  
-  .animate-marquee-reverse {
-    animation: marquee-reverse 40s linear infinite;
+  100% {
+    clip-path: inset(0% 0 0 0); /* Open, image fully visible */
+    transform: scale(1); /* Settled to normal size */
   }
-
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes marquee-reverse {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
+}
