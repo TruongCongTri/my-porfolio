@@ -7,8 +7,7 @@ export const personalInfo = {
     lng: "106.764646"
   },
   email: "tri.tcong@gmail.com", 
-  github: "",
-  linkedin: "",
-  twitter: "",
+  github: "https://github.com/TruongCongTri",
+  linkedin: "www.linkedin.com/in/trí-trương-công-35b174406",
   phone: "+84 933 048 894",
 };
